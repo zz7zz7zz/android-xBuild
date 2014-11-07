@@ -1,0 +1,12 @@
+android-xBuild
+==============
+
+apk差分与合成，zip差分，apk自动打包功能
+
+[欢迎访问我的CSDN博客](http://blog.csdn.net/zz7zz7zz)<br />
+
+![github](http://img.blog.csdn.net/20141107112107080 "附图一")
+
+![github](http://img.blog.csdn.net/20141107112202718 "附图一")
+
+![github](http://img.blog.csdn.net/20141107114720577 "附图一")
