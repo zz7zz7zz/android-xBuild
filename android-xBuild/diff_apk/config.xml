@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><config>
+	<diff_apkOldPath>D:\UserProfiles\DexYang\Desktop\apk-old</diff_apkOldPath>
+	<diff_apkNewPath>D:\UserProfiles\DexYang\Desktop\apk-new</diff_apkNewPath>
+	<diff_apkPatchPath>D:\UserProfiles\DexYang\Desktop\apk-diff</diff_apkPatchPath>
+	<merge_apkOldPath>D:\UserProfiles\DexYang\Desktop\apk-old</merge_apkOldPath>
+	<merge_apkNewPath>D:\UserProfiles\DexYang\Desktop\apk-new</merge_apkNewPath>
+	<merge_apkPatchPath>D:\UserProfiles\DexYang\Desktop\apk-diff</merge_apkPatchPath>
+</config>

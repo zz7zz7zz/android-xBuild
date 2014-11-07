@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="projectName" default="deploy">
+	<!-- 使用第三方的ant包，使ant支持for循环-->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	    <classpath>
+			<pathelement location="lib/ant-contrib-1.0b3.jar"/>
+	    </classpath>
+	</taskdef>
+
+	<property file="build.properties" />
+
+    <!-- The local.properties file is created and updated by the 'android' tool.
+         It contains the path to the SDK. It should *NOT* be checked into
+         Version Control Systems.
+    <property file="local.properties" />
+     -->
+
+    <!-- The ant.properties file can be created by you. It is only edited by the
+         'android' tool to add properties to it.
+         This is the place to change some Ant specific build properties.
+         Here are some properties you may want to change/update:
+
+         source.dir
+             The name of the source directory. Default is 'src'.
+         out.dir
+             The name of the output directory. Default is 'bin'.
+
+         For other overridable properties, look at the beginning of the rules
+         files in the SDK, at tools/ant/build.xml
+
+         Properties related to the SDK location or the project target should
+         be updated using the 'android' tool with the 'update' action.
+
+         This file is an integral part of the build system for your
+         application and should be checked into Version Control Systems.
+
+    <property file="ant.properties" />
+         -->
+
+    <property name="jar.libs.dir" value="${jar.libs.dir}" />
+
+    <!-- The project.properties file is created and updated by the 'android'
+         tool, as well as ADT.
+
+         This contains project specific properties such as project target, and library
+         dependencies. Lower level build properties are stored in ant.properties
+         (or in .classpath for Eclipse projects).
+
+         This file is an integral part of the build system for your
+         application and should be checked into Version Control Systems. -->
+    <loadproperties srcFile="project.properties" />
+
+    <!-- quick check on sdk.dir -->
+    <fail message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through an env var"
+        	unless="sdk.dir"/>
+
+	<property name="channelname" value="" />
+	<property name="channelkey" value="" />
+	
+	<!--循环打包 -->
+	<target name="deploy">  
+		<antcall target="clean"></antcall>
+	    <foreach target="modify_manifest" list="${channel.list}" param="_channel" delimiter=","></foreach>
+	</target>
+    
+	<target name="modify_manifest">
+		<!-- 获取友盟渠道标识 -->
+       
+        <propertyregex override="true" property="selfchannel"  input="${_channel}"  regexp="(.*);umeng_appkey" select="\1"/>
+		<propertyregex override="true" property="umeng_appkey" input="${_channel}"  regexp="umeng_appkey=(.*);umeng_channel" select="\1"/> 
+		<propertyregex override="true" property="umeng_channel" input="${_channel}"  regexp="umeng_channel=(.*);apkname" select="\1"/> 
+		<propertyregex override="true" property="apkname" input="${_channel}" regexp="apkname=(.*)" select="\1"/> 
+		
+		<!-- 正则匹配替换自有渠道号 -->
+		<replaceregexp flags="g" byline="false" encoding="UTF-8">
+			<regexp pattern='meta-data\s+android:name="CHANNEL"\s+android:value="(.*)"' />
+			<substitution expression='meta-data android:name="CHANNEL" android:value="${selfchannel}"' />
+			<fileset dir="" includes="AndroidManifest.xml" />
+		</replaceregexp>
+		<!-- 正则匹配替换友盟渠道号 -->
+		<replaceregexp flags="g" byline="false" encoding="UTF-8">
+			<regexp pattern='meta-data\s+android:name="UMENG_APPKEY"\s+android:value="(.*)"' />
+			<substitution expression='meta-data android:name="UMENG_APPKEY" android:value="${umeng_appkey}"' />
+			<fileset dir="" includes="AndroidManifest.xml" />
+		</replaceregexp>
+		<!-- 正则匹配替换友盟渠道名 -->
+		<replaceregexp flags="g" byline="false" encoding="UTF-8">
+			<regexp pattern='meta-data\s+android:name="UMENG_CHANNEL"\s+android:value="(.*)"' />
+			<substitution expression='meta-data android:name="UMENG_CHANNEL" android:value="${umeng_channel}"' />
+			<fileset dir="" includes="AndroidManifest.xml" />
+		</replaceregexp>
+        <!--
+		<property name="out.final.file"
+		                  location="${apk.out.dir}/${apkname.common}_${project.version}_${umeng_channel}.apk" />
+        -->
+        <property name="out.final.file"
+                          location="${apk.out.dir}/${apkname}" />
+		<antcall target="release" />
+	</target>
+
+<!-- extension targets. Uncomment the ones where you want to do custom work
+     in between standard targets -->
+<!--
+    <target name="-pre-build">
+    </target>
+    <target name="-pre-compile">
+    </target>
+
+    /* This is typically used for code obfuscation.
+       Compiled code location: ${out.classes.absolute.dir}
+       If this is not done in place, override ${out.dex.input.absolute.dir} */
+    <target name="-post-compile">
+    </target>
+-->
+
+<!--如果项目包含了jni代码，希望在打包时自动重新编译so库，可以修改build.xml文件。
+	修改方法为，在引用sdk的build.xml文件之前添加如下target：-->
+<!--
+	<target name="-pre-build" depends="-ndk-build">
+	</target>
+	<target name="-ndk-build">
+	    <exec executable="ndk-build" failonerror="true">
+	        <arg value="clean" />
+	    </exec>
+	    <exec executable="ndk-build" failonerror="true" />
+	</target>
+-->
+
+    <!-- Import the actual build file.
+
+         To customize existing targets, there are two options:
+         - Customize only one target:
+             - copy/paste the target into this file, *before* the
+               <import> task.
+             - customize it to your needs.
+         - Customize the whole content of build.xml
+             - copy/paste the content of the rules files (minus the top node)
+               into this file, replacing the <import> task.
+             - customize to your needs.
+
+         ***********************
+         ****** IMPORTANT ******
+         ***********************
+         In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
+         in order to avoid having your file be overridden by tools such as "android update project"
+    -->
+    <!-- version-tag: 1 -->
+    <import file="${sdk.dir}/tools/ant/build.xml" />
+</project>

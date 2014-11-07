@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channel>
+	<item>
+		<channelId>110485</channelId>
+		<channelKey>508814A88ECF46FD1125CEB1BF4B3292</channelKey>
+		<channelName>乐山地推</channelName>	
+		<channelOutputName>scqp_lsdt-scqp_110485_%s.apk</channelOutputName>
+		
+		<umeng_channel>lsdt-scqp</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>						
+	</item>
+	<item>
+		<channelId>110530</channelId>
+		<channelKey>996AA2E557E8D44A16FA7E629E7D679D</channelKey>
+		<channelName>乐山地推2</channelName>	
+		<channelOutputName>scqp_lsdt-scqp2_110530_%s.apk</channelOutputName>
+		
+		<umeng_channel>lsdt-scqp2</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>				
+	</item>
+	<item>
+		<channelId>110531</channelId>
+		<channelKey>594B859FD30CEC70D979C7A8EF80AB73</channelKey>
+		<channelName>乐山地推3</channelName>	
+		<channelOutputName>scqp_lsdt-scqp3_110531_%s.apk</channelOutputName>
+		
+		<umeng_channel>lsdt-scqp3</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110753</channelId>
+		<channelKey>AAA431C305B7BFDFCB6BD9819F6277A1</channelKey>
+		<channelName>乐山百度推广</channelName>	
+		<channelOutputName>scqp_bdss-scqp-eqs_110753_%s.apk</channelOutputName>
+		
+		<umeng_channel>bdss-scqp-eqs</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>			
+	</item>
+	<item>
+
+		<channelId>111587</channelId>
+		<channelKey>2ACDB072901F53BDA5142357024F90AA</channelKey>
+		<channelName>乐山地推5</channelName>	
+		<channelOutputName>scqp_lsdt-scqp5_110587_%s.apk</channelOutputName>
+		
+		<umeng_channel>lsdt-scqp5</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>			
+	</item>
+				
+</channel>
+

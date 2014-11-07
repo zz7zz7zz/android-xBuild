@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channel>
+	<item>
+		<channelId>110332</channelId>
+		<channelKey>6CD2DCAF5A89391C042B0C3B55339FF6</channelKey>
+		<channelName>广点通</channelName>	
+		<channelOutputName>scqp_gdt-scqipai_110332_%s.apk</channelOutputName>
+		
+		<umeng_channel>gdt-scqipai</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>		
+	</item>
+	<item>
+		<channelId>110136</channelId>
+		<channelKey>1E2E98AB1DAA5D89C124845F81186CA6</channelKey>
+		<channelName>收录</channelName>	
+		<channelOutputName>scqp_scqpsl_110136_%s.apk</channelOutputName>
+		
+		<umeng_channel>sl</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110379</channelId>
+		<channelKey>4BEF1733027DCA3DE11FAEDD09D0570B</channelKey>
+		<channelName>移动mm</channelName>	
+		<channelOutputName>scqp_scqpmm_110379_%s.apk</channelOutputName>
+		
+		<umeng_channel>ydmm</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>		
+	</item>
+	<item>
+		<channelId>110380</channelId>
+		<channelKey>930F90C416310703794D4DE028AFB6BF</channelKey>
+		<channelName>天翼官方渠道</channelName>	
+		<channelOutputName>scqp_scqptianyi_110380_%s.apk</channelOutputName>
+		
+		<umeng_channel>tianyi</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110454</channelId>
+		<channelKey>0904A46BBA016017CC28CACD35DF9270</channelKey>
+		<channelName>优雅大厅</channelName>	
+		<channelOutputName>scqp_scqpyydt_110454_%s.apk</channelOutputName>
+		
+		<umeng_channel>yydt</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110184</channelId>
+		<channelKey>943AA964881548B4C60D2418BE8553A3</channelKey>
+		<channelName>百度搜索</channelName>	
+		<channelOutputName>scqp_ss-scqp_110184_%s.apk</channelOutputName>
+		
+		<umeng_channel>ss-scqp</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110503</channelId>
+		<channelKey>0207B3CAA969623DD1D38634A3E10359</channelKey>
+		<channelName>北京微赢互动</channelName>	
+		<channelOutputName>scqp_scqpweiying-scqp_110503_%s.apk</channelOutputName>
+		
+		<umeng_channel>weiying-scqp</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item >
+		<channelId>110504</channelId>
+		<channelKey>E33D58C4D9C53A4F7AB42CA957E191CA</channelKey>
+		<channelName>友魄</channelName>	
+		<channelOutputName>scqp_youpo-scqp_110504_%s.apk</channelOutputName>
+		
+		<umeng_channel>youpo-scqp</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>	
+	<item>
+		<channelId>110541</channelId>
+		<channelKey>30B84E54868897DF3FACDEF33D184691</channelKey>
+		<channelName>港云游戏大厅</channelName>	
+		<channelOutputName>scqp_gangyun_hall_110541_%s.apk</channelOutputName>
+		
+		<umeng_channel>gangyun_hall</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110605</channelId>
+		<channelKey>998C7D5EE8334610601C77223A042125</channelKey>
+		<channelName>帆悦游戏大厅</channelName>	
+		<channelOutputName>scqp_fanyue_hall_110605_%s.apk</channelOutputName>
+		
+		<umeng_channel>fanyue_hall</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>	
+	<item>
+		<channelId>110678</channelId>
+		<channelKey>A953702F9F68FC3DA561AE4DF759E72D</channelKey>
+		<channelName>泡椒网</channelName>	
+		<channelOutputName>scqp_paojiao_110678_%s.apk</channelOutputName>
+		
+		<umeng_channel>paojiao</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+	<item>
+		<channelId>110677</channelId>
+		<channelKey>85B8D8CFEEAC2ACAD9D82F275DC47746</channelKey>
+		<channelName>点智互动</channelName>	
+		<channelOutputName>scqp_dianzhi_110677_%s.apk</channelOutputName>
+		
+		<umeng_channel>dianzhi</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>		
+		
+	</item>
+	<item>
+		<channelId>110682</channelId>
+		<channelKey>F949510B70DC822389116D6E4CD83538</channelKey>
+		<channelName>磨盘时代</channelName>	
+		<channelOutputName>scqp_mopan_110682_%s.apk</channelOutputName>
+		
+		<umeng_channel>mopan</umeng_channel>
+		<umeng_appkey>52b11b9b56240b55920d4a3b</umeng_appkey>
+		<umeng_appkey_test>536c4a4356240b0a7104a6cb</umeng_appkey_test>			
+	</item>
+</channel>
+

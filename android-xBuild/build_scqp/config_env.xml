@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<env>
+	<jdkDir comment="JDK绝对路径">D:\Program Files\Java\jdk1.7.0_25</jdkDir>
+	<sdkDir comment="SDK绝对路径">D:\UserProfiles\DexYang\android-sdks</sdkDir>
+	<project comment="工程名">
+		<projectItem >
+			<projectId >103000</projectId><br/>
+			<projectName >主版本</projectName>
+			<projectApkDir >D:\Dev_engine\client\EngineGames\sichun\trunk\products\engine_android</projectApkDir><br/>
+			<projectLuaDir >D:\Dev_engine\client\EngineGames\sichun\trunk</projectLuaDir>			
+			<projectChannelFile >config_channel_zhu.xml</projectChannelFile><br/>
+			<keyStoreFile >config_keystore.xml</keyStoreFile>			
+		</projectItem>
+		<projectItem >
+			<projectId >103001</projectId><br/>
+			<projectName >乐山版本</projectName>
+			<projectApkDir >D:\Dev_engine\client\EngineGames\sichun\trunk\products\engine_android</projectApkDir><br/>
+			<projectLuaDir >D:\Dev_engine\client\EngineGames\sichun\trunk</projectLuaDir>			
+			<projectChannelFile >config_channel_leshan.xml</projectChannelFile><br/>
+			<keyStoreFile >config_keystore.xml</keyStoreFile>			
+		</projectItem>
+	</project>
+</env>
