@@ -9,6 +9,7 @@ import com.open.autopkg.xml.BatConfigParser;
 import com.open.autopkg.xml.ChannelConfigParser;
 import com.open.autopkg.xml.EnvConfigParser;
 import com.open.autopkg.xml.KeyStoreParser;
+import com.open.autopkg.xml.XmlModify;
 
 public class Config {
 	
@@ -17,7 +18,7 @@ public class Config {
 	public ArrayList<ProjectBean> projectList=new ArrayList<ProjectBean>(2);
 	public ArrayList<LuaZipBean> LuaZipList=new ArrayList<LuaZipBean>(7);
 	
-	public void initConfig()
+	public void readConfig()
 	{
 		try {
 				//
@@ -101,7 +102,17 @@ public class Config {
 		}
 	}
 	
-
+	public void saveConfig(int selectedProjectIndex)
+	{
+		String userDir = System.getProperty("user.dir");
+		XmlModify xmlModify = new XmlModify();
+		xmlModify.modifyConfig(userDir+"\\build_scqp\\config_env.xml",
+				this.jdkDir,
+				this.sdkDir,
+				this.projectList.get(selectedProjectIndex).projectApkDir,
+				this.projectList.get(selectedProjectIndex).projectLuaDir,
+				selectedProjectIndex);
+	}
 	
 	public static  class ProjectBean 
 	{

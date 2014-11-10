@@ -9,8 +9,9 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -45,7 +46,6 @@ import com.open.autopkg.data.PropertyBean;
 import com.open.autopkg.lua.LuaInfo;
 import com.open.autopkg.util.FileUtil;
 import com.open.autopkg.xml.ManifestParser;
-import com.open.autopkg.xml.XmlModify;
 
 public class ApkLuaTab extends Composite {
 	
@@ -65,7 +65,7 @@ public class ApkLuaTab extends Composite {
 	private final int time_buildPerApk=130*1000;//假设打一个包花费的时间为130秒
 	private int time_buildAll;
 	private long time_startBuild;
-	private Timer progressTimer = new Timer();
+	private ScheduledExecutorService scheduExec = Executors.newScheduledThreadPool(1); 
 	
 	//UI
 	private Text jdkText;
@@ -124,7 +124,7 @@ public class ApkLuaTab extends Composite {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
 						selectedProjectIndex=combo.getSelectionIndex();
-						loadViewData();
+						initViewData();
 					}
 				});
 				combo.setBounds(77, 17, 600, 23);
@@ -161,6 +161,9 @@ public class ApkLuaTab extends Composite {
 							File directiory = new File(jdkFile);
 							jdkText.setText(directiory.getPath());
 							mConfig.jdkDir=directiory.getPath( );
+							
+							mConfig.saveConfig(selectedProjectIndex);
+							initViewData();
 						}
 					}
 				
@@ -194,6 +197,9 @@ public class ApkLuaTab extends Composite {
 							File directiory = new File(sdkFile);
 							adkText.setText(directiory.getPath());
 							mConfig.sdkDir=directiory.getPath( );
+							
+							mConfig.saveConfig(selectedProjectIndex);
+							initViewData();
 						}
 					}
 				});
@@ -227,6 +233,9 @@ public class ApkLuaTab extends Composite {
 							File directiory = new File(sdkFile);
 							projectPathText.setText(directiory.getPath());
 							mConfig.projectList.get(selectedProjectIndex).projectApkDir=directiory.getPath();
+							
+							mConfig.saveConfig(selectedProjectIndex);
+							initViewData();
 						}
 					}	
 				});
@@ -259,6 +268,9 @@ public class ApkLuaTab extends Composite {
 							File directiory = new File(sdkFile);
 							luaPathText.setText(directiory.getPath());
 							mConfig.projectList.get(selectedProjectIndex).projectLuaDir=directiory.getPath();
+							
+							mConfig.saveConfig(selectedProjectIndex);
+							initViewData();
 						}
 					}	
 				});
@@ -273,17 +285,8 @@ public class ApkLuaTab extends Composite {
 
 						super.widgetSelected(arg0);
 						
-						String userDir = System.getProperty("user.dir");
-						XmlModify xmlModify = new XmlModify();
-						xmlModify.modifyConfig(userDir+"\\build_scqp\\config_env.xml",
-								mConfig.jdkDir,
-								mConfig.sdkDir,
-								mConfig.projectList.get(selectedProjectIndex).projectApkDir,
-								mConfig.projectList.get(selectedProjectIndex).projectLuaDir,
-								selectedProjectIndex);
-						
 						initData();
-						loadViewData();
+						initViewData();
 					}
 				});
 				
@@ -750,7 +753,7 @@ public class ApkLuaTab extends Composite {
 						
 						mPropertyBean.setKeyAlias(mConfig.projectList.get(selectedProjectIndex).projectKeyStore.Alias);
 						mPropertyBean.setKeyAliasPwd(mConfig.projectList.get(selectedProjectIndex).projectKeyStore.AliasPwd);
-						mPropertyBean.setKeyStore(userDir + "\\build_scqp\\keystore");
+						mPropertyBean.setKeyStore(userDir + "\\build_scqp\\boyaa_region_games.keystore");
 						mPropertyBean.setKeyStorePwd(mConfig.projectList.get(selectedProjectIndex).projectKeyStore.KeystorePwd);
 						
 						mPropertyBean.setJarLibsDir("lib");
@@ -762,13 +765,13 @@ public class ApkLuaTab extends Composite {
 						
 						time_buildAll=time_compile+time_buildPerApk*rightChannels.size();
 						time_startBuild=System.currentTimeMillis();
-						progressTimer.schedule(new TimerTask() {
+						scheduExec.scheduleWithFixedDelay(new Runnable() {
 							
 							@Override
 							public void run() {
-								mIAutoBuild.buildProgress();
+								mIAutoBuild.buildStarted();
 							}
-						}, 1000, 1500);
+						}, 1000, 1500,TimeUnit.MILLISECONDS);
 							new Thread(new Runnable(){
 
 								@Override
@@ -980,7 +983,7 @@ public class ApkLuaTab extends Composite {
 					
 				});
 				
-				loadViewData();
+				initViewData();
 			/***************************************上传区域结束***************************************************/
 	}
 
@@ -1025,7 +1028,6 @@ public class ApkLuaTab extends Composite {
 					buildProgressLabel.setText("  0%");
 				}
 			});
-			progressTimer.cancel();
 		}
 
 		@Override
@@ -1034,6 +1036,7 @@ public class ApkLuaTab extends Composite {
 				
 				@Override
 				public void run() {
+					oneKeyApkBtn.setEnabled(false);
 					buildProgressBar.setVisible(true);
 					buildProgressLabel.setVisible(true);
 					buildProgressLabel.setText(Math.min(99, (int)((System.currentTimeMillis()-time_startBuild)*100/time_buildAll))+"%");
@@ -1044,7 +1047,7 @@ public class ApkLuaTab extends Composite {
 
 	};
 	
-	private void loadViewData(){
+	private void initViewData(){
 
 		jdkText.setText(mConfig.jdkDir);
 		jdkText.setToolTipText(mConfig.jdkDir);
@@ -1241,7 +1244,7 @@ public class ApkLuaTab extends Composite {
 	 * 初始化数据
 	 */
 	private void initData(){
-		mConfig.initConfig();
+		mConfig.readConfig();
 	}
 
 
