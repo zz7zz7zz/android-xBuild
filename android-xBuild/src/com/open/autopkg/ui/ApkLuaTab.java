@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.swt.SWT;
@@ -65,8 +65,10 @@ public class ApkLuaTab extends Composite {
 	private final int time_buildPerApk=130*1000;//假设打一个包花费的时间为130秒
 	private int time_buildAll;
 	private long time_startBuild;
-	private ScheduledExecutorService scheduExec = Executors.newScheduledThreadPool(1); 
-	
+	private ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 4, 3,  
+            TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(3),  
+            new ThreadPoolExecutor.DiscardOldestPolicy()); 
+	private boolean isTaskRunning=true;
 	//UI
 	private Text jdkText;
 	private Text adkText;
@@ -657,13 +659,13 @@ public class ApkLuaTab extends Composite {
 				
 				buildProgressBar = new ProgressBar(apkGroup, SWT.SMOOTH|SWT.INDETERMINATE);
 				buildProgressBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-				buildProgressBar.setBounds(10, 70,250,10);
+				buildProgressBar.setBounds(10, 70,280,10);
 				buildProgressBar.setVisible(false);
 				
 
 				buildProgressLabel = new Label(apkGroup, SWT.NONE);
-				buildProgressLabel.setBounds(270,65,50,20);
-				buildProgressLabel.setText("  0%");
+				buildProgressLabel.setBounds(300,65,50,20);
+				buildProgressLabel.setText("0%");
 				buildProgressLabel.setVisible(false);
 				
 				/** 和内置游戏编译在一起 */
@@ -765,13 +767,27 @@ public class ApkLuaTab extends Composite {
 						
 						time_buildAll=time_compile+time_buildPerApk*rightChannels.size();
 						time_startBuild=System.currentTimeMillis();
-						scheduExec.scheduleWithFixedDelay(new Runnable() {
+						threadPool.execute(new Runnable() {
 							
 							@Override
 							public void run() {
+								isTaskRunning=true;
+								
 								mIAutoBuild.buildStarted();
+								while(isTaskRunning)
+								{
+									try {
+										Thread.sleep(1000);
+										mIAutoBuild.buildProgress();
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								
+								}
+								mIAutoBuild.buildFinished();
 							}
-						}, 1000, 1500,TimeUnit.MILLISECONDS);
+						});
+
 							new Thread(new Runnable(){
 
 								@Override
@@ -1018,6 +1034,9 @@ public class ApkLuaTab extends Composite {
 		
 		@Override
 		public void buildFinished() {
+			isTaskRunning=false;
+			threadPool.shutdown();
+			
 			Display.getDefault().asyncExec(new Runnable() {
 				
 				@Override
@@ -1025,7 +1044,7 @@ public class ApkLuaTab extends Composite {
 					oneKeyApkBtn.setEnabled(true);
 					buildProgressBar.setVisible(false);
 					buildProgressLabel.setVisible(false);
-					buildProgressLabel.setText("  0%");
+					buildProgressLabel.setText("0%");
 				}
 			});
 		}
