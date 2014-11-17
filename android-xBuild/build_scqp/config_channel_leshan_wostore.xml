@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channel>
+	<item>
+		<channelId>110467</channelId>
+		<channelKey>B9C03748690B1417B518F17971516F8F</channelKey>
+		<channelName>联通沃商店</channelName>	
+		<channelOutputName>scqp_wosd-scqp_110467_v%s.apk</channelOutputName>
+		
+		<umeng_channel>wosd-scqp</umeng_channel>
+		<umeng_appkey>538293fc56240bbea20ce0e9</umeng_appkey>
+		<umeng_appkey_test>538293fc56240bbea20ce0e9</umeng_appkey_test>						
+	</item>
+</channel>
+
