@@ -1036,8 +1036,8 @@ public class ApkLuaTab extends Composite {
 				
 				@Override
 				public void run() {
-					oneKeyApkBtn.setEnabled(false);
-					buildProgressBar.setVisible(true);
+//					oneKeyApkBtn.setEnabled(false);
+//					buildProgressBar.setVisible(true);
 					buildProgressLabel.setVisible(true);
 					buildProgressLabel.setText(Math.min(99, (int)((System.currentTimeMillis()-time_startBuild)*100/time_buildAll))+"%");
 				}
