@@ -5,8 +5,8 @@
 		<projectItem>
 			<projectId>103000</projectId>
 			<projectName>主版本</projectName>
-			<projectApkDir>D:\Dev_engine\client\EngineGames\sichun\branches\main\online_zhu_ds_1.3.3\products\engine_android</projectApkDir>
-			<projectLuaDir>D:\Dev_engine\client\EngineGames\sichun\branches\main\online_zhu_ds_1.3.3</projectLuaDir>			
+			<projectApkDir>D:\Dev_engine\client\EngineGames\sichun\trunk\products\engine_android</projectApkDir>
+			<projectLuaDir>D:\Dev_engine\client\EngineGames\sichun\trunk\Resource</projectLuaDir>			
 			<projectChannelFile>config_channel_zhu.xml</projectChannelFile>
 			<keyStoreFile>config_keystore.xml</keyStoreFile>			
 		</projectItem>

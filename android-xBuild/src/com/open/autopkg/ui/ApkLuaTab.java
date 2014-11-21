@@ -590,6 +590,8 @@ public class ApkLuaTab extends Composite {
 						cmds.append(" ");
 						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectApkDir);
 						cmds.append(" ");
+						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectLuaDir);
+						cmds.append(" ");
 						cmds.append(gameZipsSb.toString());
 	
 						
@@ -720,6 +722,8 @@ public class ApkLuaTab extends Composite {
 						cmds.append(iosBtn.getSelection() ? "ios" :"android");
 						cmds.append(" ");
 						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectApkDir);
+						cmds.append(" ");
+						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectLuaDir);
 						cmds.append(" ");
 						cmds.append(gameZipsSb.toString());
 
@@ -863,6 +867,8 @@ public class ApkLuaTab extends Composite {
 						cmds.append(iosBtn.getSelection() ? "ios" :"android");
 						cmds.append(" ");
 						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectApkDir);
+						cmds.append(" ");
+						cmds.append(mConfig.projectList.get(selectedProjectIndex).projectLuaDir);
 						cmds.append(" ");
 						cmds.append(gameZipsSb.toString());
 					

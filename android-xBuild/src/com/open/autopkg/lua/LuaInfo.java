@@ -32,7 +32,7 @@ public class LuaInfo {
 	private String initGame(String luaPrjPath, String luafile, String gamePkg){
 		LuaState L = LuaStateFactory.newLuaState();
 	    L.openLibs();
-	    int err = L.LdoFile(luaPrjPath+"\\Resource\\scripts" + luafile);
+	    int err = L.LdoFile(luaPrjPath+"\\scripts" + luafile);
 	    if(err != 0)
 	    {
 		      switch (err)

@@ -11,19 +11,19 @@ call sync_config.bat
 
 echo start compile
 
+pushd %ANDROID_SCRIPTS_PATH%\..
+
 for /r %%i in (*.lua) do (
-	echo %%i
-	pushd %%~dpi\
-	%TOOL_LUAC% -o %%~nxi %%~nxi
-	popd
+	%TOOL_LUAC% -o %%~dpi\%%~nxi %%i 
 )
 
 popd
+
 @echo end compile lua
 
 @echo start copy main.lua error.lua
 
-copy %SCRIPTS_PATH%\main.lua %ANDROID_RES_PATH%\scripts\
-copy %SCRIPTS_PATH%\error.lua %ANDROID_RES_PATH%\scripts\
+copy %LUA_SCRIPTS_PATH%\main.lua %ANDROID_RES_PATH%\scripts\
+copy %LUA_SCRIPTS_PATH%\error.lua %ANDROID_RES_PATH%\scripts\
 
 @echo end

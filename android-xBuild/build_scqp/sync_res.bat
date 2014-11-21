@@ -29,15 +29,15 @@ if not exist %ANDROID_FONT_PATH% mkdir %ANDROID_FONT_PATH%
 if not exist %ANDROID_AUDIO_OGG_PATH% mkdir %ANDROID_AUDIO_OGG_PATH%
 
 echo copy images ...
-xcopy %IMAGES_PATH%.\*.* %ANDROID_IMAGE_PATH% /e /s /Y
+xcopy %LUA_IMAGES_PATH%\*.* %ANDROID_IMAGE_PATH% /e /s /Y
 
 echo copy scripts ...
-xcopy %SCRIPTS_PATH%.\*.* %ANDROID_SCRIPTS_PATH% /e /s /Y
+xcopy %LUA_SCRIPTS_PATH%\*.* %ANDROID_SCRIPTS_PATH% /e /s /Y
 
 echo copy fonts ...
-if exist %FONT_PATH% xcopy %FONT_PATH%.\*.*	%ANDROID_FONT_PATH% /e /s /Y
+if exist %LUA_FONT_PATH% xcopy %FONT_PATH%\*.*	%ANDROID_FONT_PATH% /e /s /Y
 
 echo copy audio
-xcopy %AUDIO_OGG_PATH%.\*.* %ANDROID_AUDIO_OGG_PATH% /e /s /Y
+xcopy %LUA_AUDIO_OGG_PATH%\*.* %ANDROID_AUDIO_OGG_PATH% /e /s /Y
 
 echo end xcopy ...
