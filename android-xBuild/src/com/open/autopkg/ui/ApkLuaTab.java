@@ -162,7 +162,7 @@ public class ApkLuaTab extends Composite {
 						{
 							File directiory = new File(jdkFile);
 							jdkText.setText(directiory.getPath());
-							mConfig.jdkDir=directiory.getPath( );
+							mConfig.jdkDir=jdkText.getText();
 							
 							mConfig.saveConfig(selectedProjectIndex);
 							initViewData();
@@ -198,7 +198,7 @@ public class ApkLuaTab extends Composite {
 						{
 							File directiory = new File(sdkFile);
 							adkText.setText(directiory.getPath());
-							mConfig.sdkDir=directiory.getPath( );
+							mConfig.sdkDir=adkText.getText();
 							
 							mConfig.saveConfig(selectedProjectIndex);
 							initViewData();
@@ -234,7 +234,7 @@ public class ApkLuaTab extends Composite {
 						{
 							File directiory = new File(sdkFile);
 							projectPathText.setText(directiory.getPath());
-							mConfig.projectList.get(selectedProjectIndex).projectApkDir=directiory.getPath();
+							mConfig.projectList.get(selectedProjectIndex).projectApkDir=projectPathText.getText();
 							
 							mConfig.saveConfig(selectedProjectIndex);
 							initViewData();
@@ -269,7 +269,7 @@ public class ApkLuaTab extends Composite {
 						{
 							File directiory = new File(sdkFile);
 							luaPathText.setText(directiory.getPath());
-							mConfig.projectList.get(selectedProjectIndex).projectLuaDir=directiory.getPath();
+							mConfig.projectList.get(selectedProjectIndex).projectLuaDir=luaPathText.getText();
 							
 							mConfig.saveConfig(selectedProjectIndex);
 							initViewData();
@@ -286,6 +286,12 @@ public class ApkLuaTab extends Composite {
 					public void widgetSelected(SelectionEvent arg0) {
 
 						super.widgetSelected(arg0);
+						
+						mConfig.jdkDir=jdkText.getText();
+						mConfig.sdkDir=adkText.getText();
+						mConfig.projectList.get(selectedProjectIndex).projectApkDir=projectPathText.getText();
+						mConfig.projectList.get(selectedProjectIndex).projectLuaDir=luaPathText.getText();
+						mConfig.saveConfig(selectedProjectIndex);
 						
 						initData();
 						initViewData();
