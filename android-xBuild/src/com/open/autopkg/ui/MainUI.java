@@ -103,6 +103,11 @@ public class MainUI {
 		logoTabItem.setText("说明                          ");
 		logoTabItem.setControl(mLogoTab);
 		
+		ShrinkTab mTinyPngTab=new ShrinkTab(tabFolder, SWT.NONE);
+		TabItem comdTabItem = new TabItem(tabFolder, SWT.NONE);
+		comdTabItem.setText("PNG/JPG压缩                           ");
+		comdTabItem.setControl(mTinyPngTab);
+		
 		ApkTab mApkTab=new ApkTab(tabFolder, SWT.NONE);
 		TabItem comaTabItem = new TabItem(tabFolder, SWT.NONE);
 		comaTabItem.setText("APK差分                           ");
@@ -117,7 +122,7 @@ public class MainUI {
 		final TabItem comcTabItem = new TabItem(tabFolder, SWT.NONE);  
 		comcTabItem.setText("APK/LUA打包                  ");  
 		comcTabItem.setControl(mApkLuaTab);
-
-		tabFolder.setSelection(3);
+		
+		tabFolder.setSelection(4);
 	}
 }
