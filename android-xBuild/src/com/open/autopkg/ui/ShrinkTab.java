@@ -166,9 +166,14 @@ public class ShrinkTab extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				for (int i = 0; i < srcFileArray.length; i++) {
+				mIShrinkResult.onShinkStart();
+				
+				for (int i = 0; i < srcFileArray.length; i++) 
+				{
 					shrink(srcFileArray[i]);
 				}
+				
+				
 			}
 		});
 		rightArrowBtn.setBounds(590, 200, 100, 50);
@@ -242,6 +247,8 @@ public class ShrinkTab extends Composite {
 		}
 	}
 	
+	
+	private int shrinkCount=0;
 	private static final String API_URL = "https://api.tinypng.com/shrink";
 	private void shrink(final String imgName)
 	{
@@ -287,6 +294,7 @@ public class ShrinkTab extends Composite {
 							      {
 								        Files.copy(response, Paths.get(output), StandardCopyOption.REPLACE_EXISTING);
 								        result=true;
+								        System.out.println("Compression success.");
 							      }
 						    } 
 						    else
@@ -305,12 +313,13 @@ public class ShrinkTab extends Composite {
 							            }
 							            errMsg=sb.toString();
 							      }
-							     
 						    }
 
 				} catch (Exception e2) {
 					e2.printStackTrace();
+					result=false;
 					errMsg=getThrowableInfo(e2);
+					System.out.println("Exception .");
 				}finally{
 						try {
 									if (in != null) {
@@ -326,7 +335,7 @@ public class ShrinkTab extends Composite {
 						}
 				}
 				
-				mIShrinkResult.onShinkResult(result, input,errMsg);
+				mIShrinkResult.onShinkResult(result, imgName,errMsg);
 			}
 			
 		}).start();
@@ -335,6 +344,22 @@ public class ShrinkTab extends Composite {
 	
 	IShrinkResult mIShrinkResult=new IShrinkResult()
 	{
+		
+		@Override
+		public void onShinkStart() {
+			
+			
+			Display.getDefault().asyncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					shrinkCount=0;
+					logText.append("\r\n压缩开始--------------------------\r\n");
+				}
+			});
+			
+		}
+		
 		@Override
 		public void onShinkResult(final boolean result, final String imageName,final String errMsg) {
 			
@@ -342,8 +367,36 @@ public class ShrinkTab extends Composite {
 				
 				@Override
 				public void run() {
-					String txt=String.format("%s	压缩:	%s\r\n",imageName,(result?"成功":"失败\n"+errMsg+"\n"));
+					
+					if(result)
+					{
+						dstImgList.add(imageName);
+					}
+					
+					shrinkCount++;
+					
+					String txt=String.format("\r\n%s	压缩:	%s\r\n",imageName,(result?"成功":"失败\r\n"+errMsg+"\r\n"));
 					logText.append(txt);
+					logText.append(String.format("\r\n									已经成功(%s)个,失败(%s)个，总(%s)个\r\n",dstImgList.getItemCount(),shrinkCount-dstImgList.getItemCount(),srcImgList.getItemCount()));
+				
+					
+					if(shrinkCount==srcImgList.getItemCount())
+					{
+						onShinkEnd();
+					}
+				}
+			});
+			
+		}
+
+		@Override
+		public void onShinkEnd() {
+			Display.getDefault().asyncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					shrinkCount=0;
+					logText.append("\r\n压缩结束--------------------------\r\n");
 				}
 			});
 			
@@ -353,7 +406,11 @@ public class ShrinkTab extends Composite {
 	
 	public interface IShrinkResult
 	{
+		public void onShinkStart ();
+		
 		public void onShinkResult (boolean result,String imageName,String errMsg);
+		
+		public void onShinkEnd ();
 	}
 	
 	

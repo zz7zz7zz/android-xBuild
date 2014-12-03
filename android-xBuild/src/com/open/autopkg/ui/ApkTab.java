@@ -2,6 +2,7 @@ package com.open.autopkg.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -627,13 +628,34 @@ public class ApkTab extends Composite
 		diff_apkPatchPathText.setToolTipText(mConfig.diff_apkPatchPath);
 		
 		File oldFile=new File(mConfig.diff_apkOldPath);
-		diff_oldApkArray=oldFile.list();
+//		diff_oldApkArray=oldFile.list();
+		diff_oldApkArray=oldFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".apk")||name.endsWith(".APK");
+			}
+		});
 		
 		File newFile=new File(mConfig.diff_apkNewPath);
-		diff_newApkArray=newFile.list();
+//		diff_newApkArray=newFile.list();
+		diff_newApkArray=newFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".apk")||name.endsWith(".APK");
+			}
+		});
 		
 		File patchFile=new File(mConfig.diff_apkPatchPath);
-		diff_patchArray=patchFile.list();
+//		diff_patchArray=patchFile.list();
+		diff_patchArray=patchFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".patch")||name.endsWith(".PATCH");
+			}
+		});
 		
 		diff_apkOldList.removeAll();
 		diff_apkNewList.removeAll();
@@ -674,13 +696,34 @@ public class ApkTab extends Composite
 		merge_apkPatchPathText.setToolTipText(mConfig.merge_apkPatchPath);
 		
 		File  mergeoldFile=new File(mConfig.merge_apkOldPath);
-		merge_oldApkArray=mergeoldFile.list();
+//		merge_oldApkArray=mergeoldFile.list();
+		merge_oldApkArray=mergeoldFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".apk")||name.endsWith(".APK");
+			}
+		});
 		
 		File  mergenewFile=new File(mConfig.merge_apkNewPath);
-		merge_newApkArray=mergenewFile.list();
+//		merge_newApkArray=mergenewFile.list();
+		merge_newApkArray=mergenewFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".apk")||name.endsWith(".APK");
+			}
+		});
 		
 		File mergepatchFile=new File(mConfig.merge_apkPatchPath);
-		merge_patchArray=mergepatchFile.list();
+//		merge_patchArray=mergepatchFile.list();
+		merge_patchArray=mergepatchFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".patch")||name.endsWith(".PATCH");
+			}
+		});
 		
 		merge_apkOldList.removeAll();
 		merge_apkNewList.removeAll();

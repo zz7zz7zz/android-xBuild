@@ -2,6 +2,7 @@ package com.open.autopkg.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 
 import org.eclipse.swt.SWT;
@@ -285,14 +286,34 @@ public class LuaTab extends Composite {
 		diffLuaZipPathText.setToolTipText(mConfig.diffLuaZipPath);
 		
 		File oldFile=new File(mConfig.oldLuaZipPath);
-		oldFileArray=oldFile.list();
+//		oldFileArray=oldFile.list();
+		oldFileArray=oldFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".zip")||name.endsWith(".ZIP");
+			}
+		});
 		
 		File newFile=new File(mConfig.newLuaZipPath);
-		newFileArray=newFile.list();
+//		newFileArray=newFile.list();
+		newFileArray=newFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".zip")||name.endsWith(".ZIP");
+			}
+		});
 		
 		File diffFile=new File(mConfig.diffLuaZipPath);
-		diffFileArray=diffFile.list();
-		
+//		diffFileArray=diffFile.list();
+		diffFileArray=diffFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".zip")||name.endsWith(".ZIP");
+			}
+		});
 		
 		zipOldList.removeAll();
 		zipNewList.removeAll();
