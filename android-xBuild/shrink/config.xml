@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><config>
 	<srcImgPath>D:\工作文档\保险箱</srcImgPath>
 	<dstImgPath>D:\UserProfiles\DexYang\Desktop</dstImgPath>
+	<apiKeys>
+		<apiKey>Asjs7PVf8RgF15ylHXGRY9jChLN39STA</apiKey>
+		<apiKey>73GtKJrkUQ7Qb5bgGmDZj5Pd34mBoMZe</apiKey>
+		<apiKey>XZmZMzW6sW300mGEiXp04VfZUXsMYzoO</apiKey>
+		<apiKey>PUmCWV3MZ2Shp1e2-w7Rnvqbm9Mc3GIz</apiKey>
+	</apiKeys>
 </config>

@@ -2,6 +2,7 @@ package com.open.autopkg.data;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import com.open.autopkg.util.FileUtil;
 import com.open.autopkg.xml.ShrinkConfigParser;
@@ -12,6 +13,7 @@ public class ShrinkConfig
 	
 	public String srcImgPath;
 	public String dstImgPath;
+	public ArrayList<String> apiKeys=new ArrayList<String>();
 	
 	public void readConfig()
 	{

@@ -15,6 +15,7 @@ public class ShrinkConfigParser extends DefaultHandler {
 
 	public static final String NODE_SRCIMGPATH									="srcImgPath";
 	public static final String NODE_DSTIMGPATH									="dstImgPath";
+	public static final String NODE_APIKEY										="apiKey";
 	
 	private String currentNodeName=null;
 	private ShrinkConfig mShrinkConfig;
@@ -58,7 +59,10 @@ public class ShrinkConfigParser extends DefaultHandler {
 		{
 			mShrinkConfig.dstImgPath=value;
 		}
-	
+		else if(NODE_APIKEY.equals(currentNodeName))
+		{
+			mShrinkConfig.apiKeys.add(value);
+		}
 	}
 	
 	@Override
