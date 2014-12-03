@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -250,6 +251,14 @@ public class ShrinkTab extends Composite {
 	
 	private int shrinkCount=0;
 	private static final String API_URL = "https://api.tinypng.com/shrink";
+	
+	private Random keyRandom = new Random();
+	private String []keys=new String[]{
+		"Asjs7PVf8RgF15ylHXGRY9jChLN39STA",//金鹏新浪邮箱
+		"73GtKJrkUQ7Qb5bgGmDZj5Pd34mBoMZe",//金鹏126邮箱
+		"XZmZMzW6sW300mGEiXp04VfZUXsMYzoO",//Long谷歌邮箱
+	};
+	
 	private void shrink(final String imgName)
 	{
 		new Thread(new Runnable(){
@@ -268,13 +277,14 @@ public class ShrinkTab extends Composite {
 							String userDir = System.getProperty("user.dir");
 							System.setProperty("javax.net.ssl.trustStore", userDir+"\\jssecacerts\\jssecacerts");
 							
-							final String key = "XZmZMzW6sW300mGEiXp04VfZUXsMYzoO";//
+							
+							final String key = keys[keyRandom.nextInt(keys.length)];//
 //						    final String input = "D:\\input.png";
 //						    final String output = "D:\\output.png";
 		
 						    connection = (HttpURLConnection) new URL(API_URL).openConnection();
-						    connection.setConnectTimeout(30000);
-						    connection.setReadTimeout(30000);
+						    connection.setConnectTimeout(60000);
+						    connection.setReadTimeout(60000);
 						    String auth = DatatypeConverter.printBase64Binary(("api:" + key).getBytes("UTF-8"));
 						    connection.setRequestProperty("Authorization", "Basic " + auth);
 						    connection.setDoOutput(true);
@@ -292,8 +302,8 @@ public class ShrinkTab extends Composite {
 								  connection=null;
 								    	
 							      connection = (HttpURLConnection) new URL(url).openConnection();
-							      connection.setConnectTimeout(30000);
-							      connection.setReadTimeout(30000);
+							      connection.setConnectTimeout(60000);
+							      connection.setReadTimeout(60000);
 							      try (InputStream response = connection.getInputStream()) 
 							      {
 								        Files.copy(response, Paths.get(output), StandardCopyOption.REPLACE_EXISTING);
