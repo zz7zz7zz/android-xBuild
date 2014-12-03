@@ -1,8 +1,14 @@
 package com.open.autopkg.ui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
@@ -28,27 +34,22 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import com.open.autopkg.data.DiffZipConfig;
+import com.open.autopkg.data.ShrinkConfig;
 
 public class ShrinkTab extends Composite {
 
 	//UI-Data
-	private DiffZipConfig mConfig=new DiffZipConfig();
-	private String[]		oldFileArray=null;
-	private String[] 	newFileArray=null;
-	private String[] 	diffFileArray=null;
+	private ShrinkConfig mConfig=new ShrinkConfig();
+	private String[]		srcFileArray=null;
+	private String[] 	dstFileArray=null;
 	
 	//UI
-	private List zipOldList;
-	private List zipNewList;
-	private List zipDiffList;
+	private List srcImgList;
+	private List dstImgList;
 	
-	private Text oldLuaPathText;
-	private Text newLuaZipPathText;
-	private Text diffLuaZipPathText;
+	private Text srcImgPathText;
+	private Text dstImgPathText;
 	private Text logText;
-	
-	 private static final String API_URL = "https://api.tinypng.com/shrink";
 	 
 	public ShrinkTab(Composite arg0, int arg1) {
 		super(arg0, arg1);
@@ -73,8 +74,8 @@ public class ShrinkTab extends Composite {
 		jdkLabel.setBounds(10, 32, 80, 15);
 		jdkLabel.setText("源图片目录：");
 		
-		 oldLuaPathText = new Text(channelGroup, SWT.BORDER );
-		oldLuaPathText.setBounds(100, 26, 500, 23);
+		srcImgPathText = new Text(channelGroup, SWT.BORDER );
+		srcImgPathText.setBounds(100, 26, 500, 23);
 		
 		Button jdkBrowseBtn = new Button(channelGroup,SWT.NONE);
 		jdkBrowseBtn.setBounds(620,25,61,23);
@@ -86,17 +87,17 @@ public class ShrinkTab extends Composite {
 				// TODO Auto-generated method stub
 				super.widgetSelected(arg0);
 				DirectoryDialog dd= new DirectoryDialog(ShrinkTab.this.getShell());
-				if(new File(mConfig.oldLuaZipPath).isDirectory())
+				if(new File(mConfig.srcImgPath).isDirectory())
 				{
-					dd.setFilterPath(mConfig.oldLuaZipPath);
+					dd.setFilterPath(mConfig.srcImgPath);
 				}
 				dd.setText("请选择源图片目录");
 				String jdkFile = dd.open();
 				if (jdkFile!=null)
 				{
 					File directiory = new File(jdkFile);
-					oldLuaPathText.setText(directiory.getPath());
-					mConfig.oldLuaZipPath=directiory.getPath( );
+					srcImgPathText.setText(directiory.getPath());
+					mConfig.srcImgPath=directiory.getPath( );
 					mConfig.saveConfig();
 					
 					initViewData();
@@ -109,8 +110,8 @@ public class ShrinkTab extends Composite {
 		adkLabel.setText("压缩后目录：");
 		adkLabel.setBounds(10, 60, 80, 15);
 		
-		newLuaZipPathText = new Text(channelGroup, SWT.BORDER);
-		newLuaZipPathText.setBounds(100, 55, 500, 23);
+		dstImgPathText = new Text(channelGroup, SWT.BORDER);
+		dstImgPathText.setBounds(100, 55, 500, 23);
 
 		Button adkBrowseBtn = new Button(channelGroup,SWT.NONE);
 		adkBrowseBtn.setBounds(620,55,61,23);
@@ -122,17 +123,17 @@ public class ShrinkTab extends Composite {
 				// TODO Auto-generated method stub
 				super.widgetSelected(arg0);
 				DirectoryDialog dd= new DirectoryDialog(ShrinkTab.this.getShell());
-				if(new File(mConfig.newLuaZipPath).isDirectory())
+				if(new File(mConfig.dstImgPath).isDirectory())
 				{
-					dd.setFilterPath(mConfig.newLuaZipPath);
+					dd.setFilterPath(mConfig.dstImgPath);
 				}
 				dd.setText("请选择压缩后图片目录");
 				String sdkFile = dd.open();
 				if (sdkFile!=null)
 				{
 					File directiory = new File(sdkFile);
-					newLuaZipPathText.setText(directiory.getPath());
-					mConfig.newLuaZipPath=directiory.getPath( );
+					dstImgPathText.setText(directiory.getPath());
+					mConfig.dstImgPath=directiory.getPath( );
 					mConfig.saveConfig();
 					initViewData();
 				}
@@ -143,16 +144,16 @@ public class ShrinkTab extends Composite {
 		channelLeftListLabel.setBounds(10, 130, 61, 15);
 		channelLeftListLabel.setText("源文件夹：");
 
-		zipOldList = new List(channelGroup, SWT.BORDER | SWT.V_SCROLL);
-		zipOldList.setBounds(10, 150, 270, 160);
+		srcImgList = new List(channelGroup, SWT.BORDER | SWT.V_SCROLL);
+		srcImgList.setBounds(10, 150, 270, 160);
 		
 		Label channelRightListLabel = new Label(channelGroup, SWT.NONE);
 		channelRightListLabel.setBounds(300, 130, 80, 15);
 		channelRightListLabel.setText("压缩后文件夹：");
 		
-		zipNewList = new List(channelGroup, SWT.BORDER | SWT.V_SCROLL);
-		zipNewList.setBounds(300, 150, 270, 160);
-		zipNewList.addListener(SWT.MouseDoubleClick, new Listener() {
+		dstImgList = new List(channelGroup, SWT.BORDER | SWT.V_SCROLL);
+		dstImgList.setBounds(300, 150, 270, 160);
+		dstImgList.addListener(SWT.MouseDoubleClick, new Listener() {
 			
 			@Override
 			public void handleEvent(Event e) {
@@ -165,73 +166,9 @@ public class ShrinkTab extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				new Thread(new Runnable(){
-
-					@Override
-					public void run() {
-					
-						boolean result=false;
-					    final String input = "D:\\input.png";
-					    final String output = "D:\\output.png";
-					    
-						HttpURLConnection connection=null;
-						try {
-									String userDir = System.getProperty("user.dir");
-									System.setProperty("javax.net.ssl.trustStore", userDir+"\\jssecacerts\\jssecacerts");
-									
-									final String key = "XZmZMzW6sW300mGEiXp04VfZUXsMYzoO";//
-//								    final String input = "D:\\input.png";
-//								    final String output = "D:\\output.png";
-				
-								    connection = (HttpURLConnection) new URL(API_URL).openConnection();
-								    String auth = DatatypeConverter.printBase64Binary(("api:" + key).getBytes("UTF-8"));
-								    connection.setRequestProperty("Authorization", "Basic " + auth);
-								    connection.setDoOutput(true);
-				
-								    try (OutputStream request = connection.getOutputStream()) 
-								    {
-								      Files.copy(Paths.get(input), request);
-								    }   
-				
-								    if (connection.getResponseCode() == 201)
-								    {
-									      // Compression was successful, retrieve output from Location header.
-									      final String url = connection.getHeaderFields().get("Location").get(0);
-										    try {
-										    	connection.disconnect();
-										    	connection=null;
-											} catch (Exception e2) {
-												// TODO: handle exception
-											}
-									      
-									      connection = (HttpURLConnection) new URL(url).openConnection();
-									      try (InputStream response = connection.getInputStream()) 
-									      {
-										        Files.copy(response, Paths.get(output), StandardCopyOption.REPLACE_EXISTING);
-										        result=true;
-									      }
-								    } 
-								    else
-								    {
-									      // Something went wrong! You can parse the JSON body for details.
-									      System.out.println("Compression failed.");
-								    }
-
-						} catch (Exception e2) {
-							e2.printStackTrace();
-						}finally{
-							if(null!=connection)
-							{
-								connection.disconnect();
-								connection=null;
-							}
-						}
-						
-						mIShrinkResult.onShinkResult(result, input);
-					}
-					
-				}).start();
-				 
+				for (int i = 0; i < srcFileArray.length; i++) {
+					shrink(srcFileArray[i]);
+				}
 			}
 		});
 		rightArrowBtn.setBounds(590, 200, 100, 50);
@@ -259,65 +196,154 @@ public class ShrinkTab extends Composite {
 
 	private void initViewData()
 	{
-		oldLuaPathText.setText(mConfig.oldLuaZipPath);
-		oldLuaPathText.setToolTipText(mConfig.oldLuaZipPath);
-		newLuaZipPathText.setText(mConfig.newLuaZipPath);
-		newLuaZipPathText.setToolTipText(mConfig.newLuaZipPath);
-//		diffLuaZipPathText.setText(mConfig.diffLuaZipPath);
-//		diffLuaZipPathText.setToolTipText(mConfig.diffLuaZipPath);
+		srcImgPathText.setText(mConfig.srcImgPath);
+		srcImgPathText.setToolTipText(mConfig.srcImgPath);
+		dstImgPathText.setText(mConfig.dstImgPath);
+		dstImgPathText.setToolTipText(mConfig.dstImgPath);
+
+		File oldFile=new File(mConfig.srcImgPath);
+//		srcFileArray=oldFile.list();
+		srcFileArray=oldFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith("png")||name.endsWith("PNG")||name.endsWith("jpg")||name.endsWith("JPG");
+			}
+		});
 		
-		File oldFile=new File(mConfig.oldLuaZipPath);
-		oldFileArray=oldFile.list();
-		
-		File newFile=new File(mConfig.newLuaZipPath);
-		newFileArray=newFile.list();
-		
-		File diffFile=new File(mConfig.diffLuaZipPath);
-		diffFileArray=diffFile.list();
-		
-		
-		zipOldList.removeAll();
-		zipNewList.removeAll();
-//		zipDiffList.removeAll();
+		File newFile=new File(mConfig.dstImgPath);
+//		dstFileArray=newFile.list();
+		dstFileArray=newFile.list(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith("png")||name.endsWith("PNG")||name.endsWith("jpg")||name.endsWith("JPG");
+			}
+		});
+			
+		srcImgList.removeAll();
+		dstImgList.removeAll();
 		logText.setText("");
 		
-		if(null!=oldFileArray)
+		if(null!=srcFileArray)
 		{
-			for(int i=0; i<oldFileArray.length; ++i)
+			for(int i=0; i<srcFileArray.length; ++i)
 			{
-				zipOldList.add(oldFileArray[i]);
+				srcImgList.add(srcFileArray[i]);
 			}
 		}
 		
-		if(null!=newFileArray)
+		if(null!=dstFileArray)
 		{
-			for(int i=0; i<newFileArray.length; ++i)
+			for(int i=0; i<dstFileArray.length; ++i)
 			{
-				zipNewList.add(newFileArray[i]);
+				dstImgList.add(dstFileArray[i]);
 			}
 		}
+	}
+	
+	private static final String API_URL = "https://api.tinypng.com/shrink";
+	private void shrink(final String imgName)
+	{
+		new Thread(new Runnable(){
 
-//		if(null!=diffFileArray)
-//		{
-//			for(int i=0; i<diffFileArray.length; ++i)
-//			{
-//				zipDiffList.add(diffFileArray[i]);
-//			}
-//		}
+			@Override
+			public void run() {
+			
+				boolean result=false;
+				String errMsg = "";
+			    final String input = mConfig.srcImgPath+"\\"+imgName;
+			    final String output = mConfig.dstImgPath+"\\"+imgName;
+			    
+				HttpURLConnection connection=null;
+				BufferedReader in=null;
+				try {
+							String userDir = System.getProperty("user.dir");
+							System.setProperty("javax.net.ssl.trustStore", userDir+"\\jssecacerts\\jssecacerts");
+							
+							final String key = "XZmZMzW6sW300mGEiXp04VfZUXsMYzoO";//
+//						    final String input = "D:\\input.png";
+//						    final String output = "D:\\output.png";
+		
+						    connection = (HttpURLConnection) new URL(API_URL).openConnection();
+						    String auth = DatatypeConverter.printBase64Binary(("api:" + key).getBytes("UTF-8"));
+						    connection.setRequestProperty("Authorization", "Basic " + auth);
+						    connection.setDoOutput(true);
+		
+						    try (OutputStream request = connection.getOutputStream()) 
+						    {
+						      Files.copy(Paths.get(input), request);
+						    }   
+		
+						    if (connection.getResponseCode() == 201)
+						    {
+							      // Compression was successful, retrieve output from Location header.
+							      final String url = connection.getHeaderFields().get("Location").get(0);
+								  connection.disconnect();
+								  connection=null;
+								    	
+							      connection = (HttpURLConnection) new URL(url).openConnection();
+							      try (InputStream response = connection.getInputStream()) 
+							      {
+								        Files.copy(response, Paths.get(output), StandardCopyOption.REPLACE_EXISTING);
+								        result=true;
+							      }
+						    } 
+						    else
+						    {
+							      // Something went wrong! You can parse the JSON body for details.
+						    	 System.out.println("Compression failed.");
+						    	 
+							      try (InputStream response = connection.getInputStream()) 
+							      {
+							    	  	in = new BufferedReader(new InputStreamReader(response));
+							            StringBuilder sb = new StringBuilder();
+							            String line;
+							            while ((line = in.readLine()) != null) 
+							            {
+							            	sb.append(line);
+							            }
+							            errMsg=sb.toString();
+							      }
+							     
+						    }
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					errMsg=getThrowableInfo(e2);
+				}finally{
+						try {
+									if (in != null) {
+					                    in.close();
+					                }
+									if(null!=connection)
+									{
+										connection.disconnect();
+										connection=null;
+									}
+						} catch (Exception e3) {
+							e3.printStackTrace();
+						}
+				}
+				
+				mIShrinkResult.onShinkResult(result, input,errMsg);
+			}
+			
+		}).start();
+		 
 	}
 	
 	IShrinkResult mIShrinkResult=new IShrinkResult()
 	{
 		@Override
-		public void onShinkResult(final boolean result, final String imageName) {
+		public void onShinkResult(final boolean result, final String imageName,final String errMsg) {
 			
 			Display.getDefault().asyncExec(new Runnable() {
 				
 				@Override
 				public void run() {
-					String txt=String.format("%s	压缩:	%s\r\n",imageName,(result?"成功":"失败"));
+					String txt=String.format("%s	压缩:	%s\r\n",imageName,(result?"成功":"失败\n"+errMsg+"\n"));
 					logText.append(txt);
-					
 				}
 			});
 			
@@ -327,6 +353,22 @@ public class ShrinkTab extends Composite {
 	
 	public interface IShrinkResult
 	{
-		public void onShinkResult (boolean result,String imageName);
+		public void onShinkResult (boolean result,String imageName,String errMsg);
 	}
+	
+	
+	/**  
+     * 获取错误的信息   
+     * @param arg1  
+     * @return  
+     */    
+    private String getThrowableInfo(Throwable arg1)   
+    {    
+        Writer writer = new StringWriter();    
+        PrintWriter pw = new PrintWriter(writer);    
+        arg1.printStackTrace(pw);    
+        pw.close();    
+        String error= writer.toString();    
+        return error;    
+    }
 }
