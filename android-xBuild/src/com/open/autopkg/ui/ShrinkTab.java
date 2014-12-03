@@ -273,6 +273,8 @@ public class ShrinkTab extends Composite {
 //						    final String output = "D:\\output.png";
 		
 						    connection = (HttpURLConnection) new URL(API_URL).openConnection();
+						    connection.setConnectTimeout(30000);
+						    connection.setReadTimeout(30000);
 						    String auth = DatatypeConverter.printBase64Binary(("api:" + key).getBytes("UTF-8"));
 						    connection.setRequestProperty("Authorization", "Basic " + auth);
 						    connection.setDoOutput(true);
@@ -290,6 +292,8 @@ public class ShrinkTab extends Composite {
 								  connection=null;
 								    	
 							      connection = (HttpURLConnection) new URL(url).openConnection();
+							      connection.setConnectTimeout(30000);
+							      connection.setReadTimeout(30000);
 							      try (InputStream response = connection.getInputStream()) 
 							      {
 								        Files.copy(response, Paths.get(output), StandardCopyOption.REPLACE_EXISTING);
