@@ -14,7 +14,10 @@ echo start compile
 pushd %ANDROID_SCRIPTS_PATH%\..
 
 for /r %%i in (*.lua) do (
-	%TOOL_LUAC% -o %%~dpi\%%~nxi %%i 
+	echo %%i
+	pushd %%~dpi\
+	%TOOL_LUAC% -o %%~nxi %%~nxi
+	popd
 )
 
 popd
