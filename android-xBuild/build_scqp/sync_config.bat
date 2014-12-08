@@ -8,7 +8,8 @@ REM PLATFORM CONTAIN android/ios/wp
 set AUDIO_FORMAT=ogg
 set AUDIO_UPDATE_ROOT=update
 
-echo onif ios==%PACKAGE_STYLE% (
+echo on
+if ios==%PACKAGE_STYLE% (
 	set AUDIO_FORMAT=mp3
 	set AUDIO_UPDATE_ROOT=user
 ) else (
