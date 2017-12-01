@@ -1,9 +1,15 @@
 android-xBuild
-==============
+==========================================
 
-apk差分与合成，zip差分，apk自动打包功能，png/jpg压缩
+## 一、说明
+    实现功能含：
+    1.apk差分与合成
+    2.zip差分
+    3.apk自动打包功能
+    4.png/jpg压缩
 
-[欢迎访问我的CSDN博客](http://blog.csdn.net/zz7zz7zz)<br />
+
+## 二、效果展示 
 
 ![github](http://img.blog.csdn.net/20151203105018139 "附图")
 
@@ -13,5 +19,7 @@ apk差分与合成，zip差分，apk自动打包功能，png/jpg压缩
 
 ![github](http://img.blog.csdn.net/20151203104954739 "附图")
 
+
+[欢迎访问我的CSDN博客](http://blog.csdn.net/zz7zz7zz)<br />
 
 
