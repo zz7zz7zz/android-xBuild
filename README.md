@@ -3,9 +3,8 @@ android-xBuild
 
 ## 一、说明
 
-实现功能含:
-
-    1.apk差分与合成</br>
+实现功能含:</br>
+    1.apk差分与合成</br>
     2.zip差分</br>
     3.apk自动打包功能</br>
     4.png/jpg压缩</br>
