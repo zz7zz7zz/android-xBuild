@@ -5,8 +5,11 @@ android-xBuild
 实现功能有:<br>
 
     1.png/jpg压缩
+    
     2.apk差分与合成
+    
     3.zip差分
+    
     4.apk自动打包功能
     
 
