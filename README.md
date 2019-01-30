@@ -12,13 +12,17 @@ android-xBuild
 
 ## 二、效果展示 
 
-![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/1.jpg "附图")
-
+apk自动打包功能:
 ![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/2.jpg "附图")
 
+zip差分:
 ![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/3.jpg "附图")
 
+png/jpg压缩:
 ![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/4.jpg "附图")
+
+apk自动打包功能:
+![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/1.jpg "附图")
 
 
 [欢迎访问我的CSDN博客](http://blog.csdn.net/zz7zz7zz)<br/>
