@@ -27,7 +27,7 @@ zip差分:
 
 apk自动打包功能:
 
-![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/3.jpg "附图")
+![github](https://github.com/zz7zz7zz/android-xBuild/blob/master/4.jpg "附图")
 
 
 
